@@ -391,16 +391,60 @@ footer{background:var(--nd);padding:64px 2.5rem 0;border-top:2px solid rgba(240,
   nav{padding:0 1.25rem;height:72px}
   .nav-logo img{height:54px}
   .nav-links{display:none}
-  .hero{grid-template-columns:1fr;grid-template-rows:auto}
-  .hero-media{min-height:58vw}
-  .hero-media::after{background:linear-gradient(to bottom,var(--nd) 0%,transparent 30%)}
+
+  /* MOBILE HERO: full-bleed image with text overlay — no broken split */
+  .hero{
+    display:block;
+    position:relative;
+    min-height:92vw;
+    max-height:560px;
+    overflow:hidden
+  }
+  /* Image becomes the background via absolute positioning */
+  .hero-media{
+    position:absolute;inset:0;
+    min-height:100%
+  }
+  .hero-media img{
+    width:100%;height:100%;
+    object-fit:cover;object-position:center center;
+    display:block
+  }
+  /* Full dark gradient so text is always readable */
+  .hero-media::after{
+    background:linear-gradient(
+      to top,
+      rgba(10,28,48,.96) 0%,
+      rgba(10,28,48,.72) 42%,
+      rgba(10,28,48,.28) 75%,
+      transparent 100%
+    )
+  }
+  /* Text panel floats over the image */
+  .hero-panel{
+    position:relative;z-index:2;
+    background:transparent;
+    padding:0 1.5rem 2.5rem;
+    justify-content:flex-end;
+    min-height:92vw;
+    max-height:560px
+  }
+  .hero-panel::before{display:none}
   .hero-pills{display:none}
-  .hero-panel{padding:2.5rem 1.5rem}
+
+  /* MOSAIC: 2×2 grid (drop 5th cell on mobile, show 4 strong photos) */
+  .mosaic{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:200px 200px;
+    gap:3px
+  }
+  .mi.tall{grid-row:span 1}
+  /* Hide the 5th cell on mobile to avoid blank gap */
+  .mi:nth-child(5){display:none}
+
   .split{grid-template-columns:1fr}
   .split-dark{padding:48px 1.5rem}
-  .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-  .mi.tall{grid-row:span 1}
-  .mi{height:220px}
   .dishes-grid{grid-template-columns:1fr}
   .dish{aspect-ratio:16/9}
   .vibe-body{padding:60px 1.5rem}
@@ -416,10 +460,16 @@ footer{background:var(--nd);padding:64px 2.5rem 0;border-top:2px solid rgba(240,
   .announce-inner{flex-direction:column;text-align:center;gap:10px}
   #ada-widget{bottom:20px;left:16px}
   #consent-banner{flex-direction:column;align-items:flex-start}
+  /* Tighten hero text sizing for mobile overlay */
+  .hero h1{font-size:clamp(2.6rem,10vw,4rem);margin-bottom:18px}
+  .hero-sub{font-size:1rem;margin-bottom:26px}
+  .hero-btns .btn-g,.hero-btns .btn-o{padding:13px 24px;font-size:11px}
 }
 @media(max-width:580px){
   .sp-grid{grid-template-columns:1fr}
   .ft-logo img{height:64px}
+  .hero{min-height:110vw;max-height:620px}
+  .hero-panel{min-height:110vw;max-height:620px}
 }
 </style>
 </head>
